@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Birthday Card with Heart-Shaped Confetti</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: #fdbf00;
+      }
+
+      .card {
+        width: 640px;
+        height: 400px;
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        -webkit-perspective: 1200px;
+        perspective: 1200px;
+        transition: 1s;
+      }
+
+      .card:hover {
+        transform: rotate(-5deg);
+      }
+
+      .card:hover .outside {
+        transform: rotateY(-130deg);
+      }
+
+      .outside,
+      .inside {
+        height: 100%;
+        width: 50%;
+        position: absolute;
+        left: 50.1%;
+      }
+
+      .inside {
+        background: linear-gradient(to right, #e7e7e7, #ffffff 30%);
+        line-height: 3;
+        padding: 0 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        left: 50%;
+      }
+
+      .outside {
+        -webkit-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+        z-index: 1;
+        transform-origin: left;
+        transition: 2s;
+        cursor: pointer;
+      }
+
+      .front,
+      .back {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: rotateX(0deg);
+      }
+
+      .front {
+        background-color: #ffffff;
+      }
+
+      .back {
+        transform: rotateY(180deg);
+        background: linear-gradient(to left, #e7e7e7, #ffffff 30%);
+      }
+
+      .cake {
+        width: 100%;
+        position: absolute;
+        bottom: 60px;
+        animation: pulseCake 1.5s ease-in-out infinite;
+      }
+
+      .top-layer,
+      .middle-layer,
+      .bottom-layer {
+        height: 80px;
+        width: 240px;
+        background-repeat: repeat;
+        background-size: 60px 100px;
+        background-position: 28px 0;
+        background-image: linear-gradient(
+            transparent 50px,
+            #fedbab 50px,
+            #fedbab 60px,
+            transparent 60px
+          ),
+          radial-gradient(circle at 30px 5px, #994c10 25px, #fcbf29 30px);
+        border-radius: 10px 10px 0 0;
+        position: relative;
+        margin: auto;
+      }
+
+      .middle-layer {
+        transform: scale(0.85);
+        top: 6px;
+      }
+
+      .top-layer {
+        transform: scale(0.7);
+        top: 26px;
+      }
+
+      .candle {
+        height: 45px;
+        width: 15px;
+        background: repeating-linear-gradient(
+          45deg,
+          #fd3018 0,
+          #fd3018 5px,
+          #ffa89e 5px,
+          #ffa89e 10px
+        );
+        position: absolute;
+        margin: auto;
+        left: 0;
+        right: 0;
+        bottom: 202px;
+      }
+
+      .candle:before {
+        content: "";
+        position: absolute;
+        height: 16px;
+        width: 16px;
+        background-color: #ffa500;
+        border-radius: 0 50% 50% 50%;
+        bottom: 48px;
+        transform: rotate(45deg);
+        left: -1px;
+      }
+
+      .outside p {
+        font-size: 23px;
+        text-transform: uppercase;
+        margin-top: 30px;
+        text-align: center;
+        letter-spacing: 6px;
+        color: #00005c;
+      }
+
+      .inside h1 {
+        font-size: 120px;
+        line-height: 120px;
+      }
+
+      /* Cake pulse animation */
+      @keyframes pulseCake {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      /* Glitch Effect */
+      @keyframes glitch {
+        0% {
+          text-shadow: 2px 0 red, -2px 0 blue, 0 2px green, 0 -2px yellow;
+          transform: translate(0);
+        }
+        20% {
+          text-shadow: -2px 0 red, 2px 0 blue, 0 2px yellow, 0 -2px green;
+          transform: translate(-2px, 2px);
+        }
+        40% {
+          text-shadow: 2px 0 green, -2px 0 yellow, 0 2px blue, 0 -2px red;
+          transform: translate(2px, -2px);
+        }
+        60% {
+          text-shadow: -2px 0 yellow, 2px 0 green, 0 2px red, 0 -2px blue;
+          transform: translate(-2px, 2px);
+        }
+        80% {
+          text-shadow: 2px 0 blue, -2px 0 red, 0 2px yellow, 0 -2px green;
+          transform: translate(2px, -2px);
+        }
+        100% {
+          text-shadow: 2px 0 red, -2px 0 blue, 0 2px green, 0 -2px yellow;
+          transform: translate(0);
+        }
+      }
+
+      /* Apply glitch effect to "Tap" text */
+      .tap-here {
+        font-size: 28px;
+        font-weight: bold;
+        color: #ff6347;
+        text-align: center;
+        cursor: pointer;
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 12px 24px;
+        background: transparent;
+        border-radius: 20px;
+        transition: all 0.3s ease-in-out;
+        animation: glitch 1s infinite;
+      }
+
+      /* Hover Effect */
+      .tap-here:hover {
+        background: #ff6347;
+        color: white;
+        transform: translateY(-5px);
+      }
+
+      /* Active Effect */
+      .tap-here:active {
+        transform: translateY(0);
+      }
+
+      /* Heart Confetti Animation */
+      @keyframes heartRain {
+        0% {
+          opacity: 1;
+          transform: translateY(-100px) rotate(0deg);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(300px) rotate(720deg);
+        }
+      }
+
+      /* Heart Shape Style */
+      .heart {
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background-color: red;
+        clip-path: polygon(50% 0%, 100% 35%, 75% 100%, 25% 100%, 0% 35%);
+        opacity: 0;
+        animation: heartRain 3s forwards;
+        pointer-events: none;
+      }
+
+      /* Randomize Heart Position and Animation Delays */
+      .heart:nth-child(1) {
+        left: 10%;
+        animation-delay: 0s;
+      }
+      .heart:nth-child(2) {
+        left: 20%;
+        animation-delay: 0.2s;
+      }
+      .heart:nth-child(3) {
+        left: 40%;
+        animation-delay: 0.4s;
+      }
+      .heart:nth-child(4) {
+        left: 60%;
+        animation-delay: 0.6s;
+      }
+      .heart:nth-child(5) {
+        left: 80%;
+        animation-delay: 0.8s;
+      }
+
+      /* Add more hearts randomly */
+      .heart:nth-child(6) {
+        left: 30%;
+        animation-delay: 0.1s;
+      }
+      .heart:nth-child(7) {
+        left: 50%;
+        animation-delay: 0.3s;
+      }
+      .heart:nth-child(8) {
+        left: 70%;
+        animation-delay: 0.5s;
+      }
+      .heart:nth-child(9) {
+        left: 90%;
+        animation-delay: 0.7s;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="outside">
+        <div class="front">
+          <p>Happy Birthday</p>
+          <div class="cake">
+            <div class="top-layer"></div>
+            <div class="middle-layer"></div>
+            <div class="bottom-layer"></div>
+            <div class="candle"></div>
+          </div>
+          <!-- Glitching Tap Text Below Cake -->
+          <div class="tap-here" id="tapHereText">Tap</div>
+        </div>
+        <div class="back"></div>
+      </div>
+      <div class="inside">
+        <p>Happy Birthday, beautiful soul! May Your Day Be As Amazing As You Are!</p>
+        <h1>&#127873;</h1>
+        <!-- Heart Confetti Elements -->
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+        <div class="heart"></div>
+      </div>
+    </div>
+
+    <script>
+      const tapHereText = document.getElementById("tapHereText");
+      const heartsContainer = document.querySelector(".inside");
+
+      // Add event listener to "Tap" text
+      tapHereText.addEventListener("click", function () {
+        // Start continuous heart rain
+        setInterval(() => {
+          const newHeart = document.createElement("div");
+          newHeart.classList.add("heart");
+          heartsContainer.appendChild(newHeart);
+
+          // Animation for each new heart
+          newHeart.style.animation = "heartRain 3s forwards";
+        }, 500); // New heart added every 500ms
+
+        // Change the text and add some more glitch effects
+        tapHereText.innerText = "🎉 You Tapped Me! 🎉";
+        tapHereText.style.animation = "none"; // Reset the glitch animation
+        tapHereText.offsetHeight; // Trigger reflow to reset the animation
+        tapHereText.style.animation = "glitch 1s infinite"; // Restart glitch animation
+        tapHereText.style.color = "green";
+      });
+    </script>
+  </body>
+</html>
